@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выпадающее меню V</title>
+    <style>
+        .menu {
+            list-style: none;
+            padding: 0;
+            width: 200px;
+        }
+        .menu li {
+            cursor: pointer;
+            padding: 10px;
+            background: linear-gradient(to right, #FF9A00, #FF3D00);
+            transition: background 0.3s;
+        }
+        .menu li:hover {
+            background: linear-gradient(to right, #FF3D00, #FF9A00);
+        }
+        .menu .submenu {
+            display: none;
+            padding-left: 20px;
+            background: #FF9A00;
+            border-left: 2px solid #FF3D00;
+        }
+        .menu .submenu li {
+            padding: 10px;
+            border-bottom: 1px solid #FF3D00;
+        }
+        .menu .submenu .submenu {
+            padding-left: 40px;
+        }
+    </style>
+</head>
+<body>
+    <ul class="menu">
+        <li>Новые поступления
+            <ul class="submenu">
+                <li>Книги
+                    <ul class="submenu">
+                        <li>Классика</li>
+                        <li>Зарубежные
+                            <ul class="submenu">
+                                <li>Детективы</li>
+                                <li>Научная фантастика</li>
+                                <li>Исторические</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>DVD
+                    <ul class="submenu">
+                        <li>Отечественные
+                            <ul class="submenu">
+                                <li>Детективы</li>
+                                <li>Научная фантастика</li>
+                                <li>Исторические</li>
+                            </ul>
+                        </li>
+                        <li>Зарубежные
+                            <ul class="submenu"></ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    
+    <script>
+        const menuItems = document.querySelectorAll('.menu li');
+    
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+    
+                const submenu = item.querySelector('.submenu');
+                if (submenu) {
+                    submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+                } else {
+                    const link = item.querySelector('a');
+                    if (link && link.href) {
+                        window.location.href = link.href;
+                    }
+                }
+            });
+        });
+    
+        document.addEventListener('click', (e) => {
+            menuItems.forEach(item => {
+                const submenu = item.querySelector('.submenu');
+                if (submenu && submenu.style.display === 'block' && !item.contains(e.target)) {
+                    submenu.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
